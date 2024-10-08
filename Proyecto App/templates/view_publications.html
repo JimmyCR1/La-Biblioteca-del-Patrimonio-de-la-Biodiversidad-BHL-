@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Publicaciones</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Lista de Publicaciones</h1>
+
+    {% if publications %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Fecha de Publicación</th>
+                    <th>Editorial</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for publication in publications %}
+                    <tr>
+                        <td>{{ publication[1] }}</td>
+                        <td>{{ publication[2] }}</td>
+                        <td>{{ publication[3] }}</td>
+                        <td class="action-buttons">
+                            <a href="{{ url_for('view_publication', publication_id=publication[0]) }}" class="btn btn-view">Detalles</a>
+                            <a href="{{ url_for('edit_publication', publication_id=publication[0]) }}" class="btn btn-edit">Editar</a>
+                            <form action="{{ url_for('delete_publication', publication_id=publication[0]) }}" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-delete" onclick="return confirm('¿Está seguro de que desea eliminar esta publicación?')">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay publicaciones disponibles.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}" class="btn btn-back">Volver al Menú Principal</a>
+</body>
+</html>

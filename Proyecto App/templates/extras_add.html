@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asociar Información a la Publicación</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Asociar Información a la Publicación</h1>
+        
+        <form action="{{ url_for('extras_add', publication_id=publication_id) }}" method="POST" class="publication-form">
+            <div class="associated-content">
+                <div class="authors-section">
+                    <h2>Autores</h2>
+                    <div class="checkbox-group">
+                        {% for author in authors %}
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="authors" value="{{ author[0] }}">
+                            {{ author[1] }} {{ author[2] }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="species-section">
+                    <h2>Especies</h2>
+                    <div class="checkbox-group">
+                        {% for specie in species %}
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="species" value="{{ specie[0] }}">
+                            {{ specie[1] }} {{ specie[2] }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="collections-section">
+                    <h2>Colecciones</h2>
+                    <div class="checkbox-group">
+                        {% for collection in collections %}
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="collections" value="{{ collection[0] }}">
+                            {{ collection[1] }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Asociar Información</button>
+                <a href="{{ url_for('index') }}" class="btn btn-back">Volver al Menú Principal</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

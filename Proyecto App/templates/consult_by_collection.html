@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar por Colección</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>
+        {% if collection_name %}
+            Publicaciones en la Colección {{ collection_name }}
+        {% else %}
+            Consultar Publicaciones por Colección
+        {% endif %}
+    </h1>
+
+    {% if collections %}
+        <form action="{{ url_for('consult_by_collection') }}" method="POST" class="search-form">
+            <div class="form-group">
+                <label for="collection_id">Seleccione una colección:</label>
+                <select id="collection_id" name="collection_id" required>
+                    <option value="">Seleccione una colección</option>
+                    {% for collection in collections %}
+                        <option value="{{ collection[0] }}">{{ collection[1] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+    {% endif %}
+
+    {% if publications %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Fecha de Publicación</th>
+                    <th>Editorial</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for publication in publications %}
+                    <tr>
+                        <td>{{ publication[1] }}</td>
+                        <td>{{ publication[2] }}</td>
+                        <td>{{ publication[3] }}</td>
+                        <td>
+                            <a href="{{ url_for('view_publication', publication_id=publication[0]) }}" class="btn btn-view">Ver Detalles</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="no-results">No se encontraron publicaciones para la consulta.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}" class="btn btn-back">Volver al Menú Principal</a>
+</body>
+</html>

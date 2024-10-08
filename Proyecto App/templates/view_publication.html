@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de la Publicación</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="publication-details">
+        <h1>Detalles de la Publicación</h1>
+
+        <div class="publication-info">
+            <h2>Información General</h2>
+            <p><strong>Título:</strong> {{ publication[0] }}</p>
+            <p><strong>Fecha de Publicación:</strong> {{ publication[1] }}</p>
+            <p><strong>Editorial:</strong> {{ publication[2] }}</p>
+            <p><strong>DOI:</strong> {{ publication[3] }}</p>
+            <p><strong>ISBN:</strong> {{ publication[4] }}</p>
+            <p><strong>País:</strong> {{ publication[5] }}</p>
+        </div>
+
+        <div class="authors-section">
+            <h2>Autores Asociados</h2>
+            {% if authors %}
+                <ul>
+                    {% for author in authors %}
+                        <li>{{ author[0] }} {{ author[1] }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hay autores asociados.</p>
+            {% endif %}
+        </div>
+
+        <div class="species-section">
+            <h2>Especies Asociadas</h2>
+            {% if species %}
+                <ul>
+                    {% for specie in species %}
+                        <li>{{ specie[0] }} {{ specie[1] }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hay especies asociadas.</p>
+            {% endif %}
+        </div>
+
+        <div class="collections-section">
+            <h2>Colecciones Asociadas</h2>
+            {% if collections %}
+                <ul>
+                    {% for collection in collections %}
+                        <li>{{ collection[0] }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No hay colecciones asociadas.</p>
+            {% endif %}
+        </div>
+
+        <div class="navigation-buttons">
+            <a href="{{ url_for('view_publications') }}" class="btn btn-back">Volver a la lista de publicaciones</a>
+            <a href="{{ url_for('index') }}" class="btn btn-back">Volver al Menú Principal</a>
+        </div>
+    </div>
+</body>
+</html>

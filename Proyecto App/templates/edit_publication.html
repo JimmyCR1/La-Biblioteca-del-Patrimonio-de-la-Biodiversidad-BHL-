@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Publicación</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Editar Publicación</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="title">Título:</label>
+                <input type="text" id="title" name="title" value="{{ publication[0] }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="publication_date">Fecha de Publicación:</label>
+                <input type="date" id="publication_date" name="publication_date" value="{{ publication[1] }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="publisher">Editorial:</label>
+                <input type="text" id="publisher" name="publisher" value="{{ publication[2] }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="doi">DOI:</label>
+                <input type="text" id="doi" name="doi" value="{{ publication[3] }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="isbn">ISBN:</label>
+                <input type="text" id="isbn" name="isbn" value="{{ publication[4] }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="country">País:</label>
+                <input type="text" id="country" name="country" value="{{ publication[5] }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="institution_id">ID de Institución:</label>
+                <input type="number" id="institution_id" name="institution_id" value="{{ publication[6] or '' }}">
+            </div>
+
+            <div class="associated-content">
+                <div class="authors-section">
+                    <h2>Autores</h2>
+                    <div class="checkbox-group">
+                        {% for author in authors %}
+                        <label>
+                            <input type="checkbox" name="authors" value="{{ author[0] }}" 
+                                   {% if author[0] in associated_authors %}checked{% endif %}>
+                            {{ author[1] }} {{ author[2] }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="species-section">
+                    <h2>Especies</h2>
+                    <div class="checkbox-group">
+                        {% for specie in species %}
+                        <label>
+                            <input type="checkbox" name="species" value="{{ specie[0] }}" 
+                                   {% if specie[0] in associated_species %}checked{% endif %}>
+                            {{ specie[1] }} {{ specie[2] }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="collections-section">
+                    <h2>Colecciones</h2>
+                    <div class="checkbox-group">
+                        {% for collection in collections %}
+                        <label>
+                            <input type="checkbox" name="collections" value="{{ collection[0] }}" 
+                                   {% if collection[0] in associated_collections %}checked{% endif %}>
+                            {{ collection[1] }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit">Actualizar Publicación</button>
+                <a href="{{ url_for('view_publications') }}" class="btn btn-back">Volver a la lista de publicaciones</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
